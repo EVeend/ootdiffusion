@@ -29,6 +29,8 @@ VAE_PATH = "levihsu/ootd"
 UNET_PATH = "levihsu/ootd"
 MODEL_PATH = "levihsu/ootd"
 
+# ootd_hd/checkpoint-36000/
+
 class OOTDiffusionHD:
 
     def __init__(self, gpu_id):
@@ -42,13 +44,13 @@ class OOTDiffusionHD:
 
         unet_garm = UNetGarm2DConditionModel.from_pretrained(
             UNET_PATH,
-            subfolder="ootd_hd/checkpoint-36000/unet_garm",
+            subfolder="unet_garm",
             torch_dtype=torch.float16,
             use_safetensors=True,
         )
         unet_vton = UNetVton2DConditionModel.from_pretrained(
             UNET_PATH,
-            subfolder="ootd_hd/checkpoint-36000/unet_vton",
+            subfolder="unet_vton",
             torch_dtype=torch.float16,
             use_safetensors=True,
         )
