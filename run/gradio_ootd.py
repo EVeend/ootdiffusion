@@ -15,10 +15,6 @@ from preprocess.humanparsing.run_parsing import Parsing
 from ootd.inference_ootd_hd import OOTDiffusionHD
 from ootd.inference_ootd_dc import OOTDiffusionDC
 
-from huggingface_hub import hf_hub_download
-
-hf_hub_download(repo_id="levihsu/OOTDiffusion", filename="checkpoints", local_dir="./")
-
 
 openpose_model_hd = OpenPose(0)
 parsing_model_hd = Parsing(0)
@@ -32,13 +28,13 @@ ootd_model_dc = OOTDiffusionDC(1)
 category_dict = ['upperbody', 'lowerbody', 'dress']
 category_dict_utils = ['upper_body', 'lower_body', 'dresses']
 
-
 example_path = os.path.join(os.path.dirname(__file__), 'examples')
 model_hd = os.path.join(example_path, 'model/model_1.png')
 garment_hd = os.path.join(example_path, 'garment/03244_00.jpg')
 model_dc = os.path.join(example_path, 'model/model_8.png')
 garment_dc = os.path.join(example_path, 'garment/048554_1.jpg')
 
++@spaces.GPU
 def process_hd(vton_img, garm_img, n_samples, n_steps, image_scale, seed):
     model_type = 'hd'
     category = 0 # 0:upperbody; 1:lowerbody; 2:dress
