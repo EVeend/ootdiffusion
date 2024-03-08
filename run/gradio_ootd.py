@@ -36,7 +36,7 @@ garment_hd = os.path.join(example_path, 'garment/03244_00.jpg')
 model_dc = os.path.join(example_path, 'model/model_8.png')
 garment_dc = os.path.join(example_path, 'garment/048554_1.jpg')
 
-+@spaces.GPU
+@spaces.GPU
 def process_hd(vton_img, garm_img, n_samples, n_steps, image_scale, seed):
     model_type = 'hd'
     category = 0 # 0:upperbody; 1:lowerbody; 2:dress
