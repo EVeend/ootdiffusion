@@ -8,6 +8,9 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from parsing_api import onnx_inference
 import torch
 
+from huggingface_hub import hf_hub_download
+hf_hub_download(repo_id="levihsu/OOTDiffusion", filename="checkpoints/humanparsing/parsing_atr.onnx", local_dir="./checkpoints/humanparsing")
+hf_hub_download(repo_id="levihsu/OOTDiffusion", filename="checkpoints/humanparsing/parsing_lip.onnx", local_dir="./checkpoints/humanparsing")
 
 class Parsing:
     def __init__(self, gpu_id: int):
