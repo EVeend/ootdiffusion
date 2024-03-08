@@ -22,8 +22,8 @@ class Parsing:
         session_options.add_session_config_entry('gpu_id', str(gpu_id))
 
         parsing_ckpt_path = os.path.join(Path(__file__).absolute().parents[2].absolute(), 'checkpoints/humanparsing')
-        atr_model_path = 'https://huggingface.co/levihsu/OOTDiffusion/blob/main/checkpoints/humanparsing/parsing_atr.onnx'
-        lip_model_path = 'https://huggingface.co/levihsu/OOTDiffusion/blob/main/checkpoints/humanparsing/parsing_lip.onnx'
+        atr_model_path = 'https://huggingface.co/levihsu/OOTDiffusion/resolve/main/checkpoints/humanparsing/parsing_atr.onnx'
+        lip_model_path = 'https://huggingface.co/levihsu/OOTDiffusion/resolve/main/checkpoints/humanparsing/parsing_lip.onnx'
         
         from basicsr.utils.download_util import load_file_from_url
         load_file_from_url(atr_model_path, model_dir=parsing_ckpt_path)
