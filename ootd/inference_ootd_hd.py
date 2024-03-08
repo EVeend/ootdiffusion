@@ -29,44 +29,41 @@ VAE_PATH = "levihsu/ootd"
 UNET_PATH = "levihsu/ootd"
 MODEL_PATH = "levihsu/ootd"
 
-# ootd_hd/checkpoint-36000/
-
 class OOTDiffusionHD:
 
     def __init__(self, gpu_id):
         self.gpu_id = 'cuda:' + str(gpu_id)
 
-        # vae = AutoencoderKL.from_pretrained(
-        #     VAE_PATH,
-        #     subfolder="vae",
-        #     torch_dtype=torch.float16,
-        # )
+        vae = AutoencoderKL.from_pretrained(
+            VAE_PATH,
+            subfolder="vae",
+            torch_dtype=torch.float16,
+        )
 
-        # unet_garm = UNetGarm2DConditionModel.from_pretrained(
-        #     UNET_PATH,
-        #     subfolder="unet_garm",
-        #     torch_dtype=torch.float16,
-        #     use_safetensors=True,
-        # )
-        # unet_vton = UNetVton2DConditionModel.from_pretrained(
-        #     UNET_PATH,
-        #     subfolder="unet_vton",
-        #     torch_dtype=torch.float16,
-        #     use_safetensors=True,
-        # )
+        unet_garm = UNetGarm2DConditionModel.from_pretrained(
+            UNET_PATH,
+            subfolder="ootd_hd/checkpoint-36000/unet_garm",
+            torch_dtype=torch.float16,
+            use_safetensors=True,
+        )
+        unet_vton = UNetVton2DConditionModel.from_pretrained(
+            UNET_PATH,
+            subfolder="ootd_hd/checkpoint-36000/unet_vton",
+            torch_dtype=torch.float16,
+            use_safetensors=True,
+        )
 
         self.pipe = OotdPipeline.from_pretrained(
             MODEL_PATH,
+            vae=vae,
+            unet_garm=unet_garm,
+            unet_vton=unet_vton,
             torch_dtype=torch.float16,
             variant="fp16",
             use_safetensors=True,
             safety_checker=None,
             requires_safety_checker=False,
         ).to(self.gpu_id)
-        
-            # vae=vae,
-            # unet_garm=unet_garm,
-            # unet_vton=unet_vton,
         
         self.pipe.scheduler = UniPCMultistepScheduler.from_config(self.pipe.scheduler.config)
         
