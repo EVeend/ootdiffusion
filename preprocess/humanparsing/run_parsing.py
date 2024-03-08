@@ -10,13 +10,6 @@ import torch
 
 from huggingface_hub import hf_hub_download
 
-hf_hub_download(repo_id="levihsu/OOTDiffusion", 
-                filename="checkpoints/humanparsing/parsing_atr.onnx", 
-                local_dir=os.path.join(Path(__file__).absolute().parents[2].absolute(), 'checkpoints/humanparsing'))
-hf_hub_download(repo_id="levihsu/OOTDiffusion", 
-                filename="checkpoints/humanparsing/parsing_lip.onnx", 
-                local_dir=os.path.join(Path(__file__).absolute().parents[2].absolute(), 'checkpoints/humanparsing'))
-
 class Parsing:
     def __init__(self, gpu_id: int):
         self.gpu_id = gpu_id
@@ -25,6 +18,14 @@ class Parsing:
         session_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
         session_options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
         session_options.add_session_config_entry('gpu_id', str(gpu_id))
+
+        hf_hub_download(repo_id="levihsu/OOTDiffusion", 
+                        filename="checkpoints/humanparsing/parsing_atr.onnx", 
+                        local_dir=os.path.join(Path(__file__).absolute().parents[2].absolute(), 'checkpoints/humanparsing'))
+        hf_hub_download(repo_id="levihsu/OOTDiffusion", 
+                        filename="checkpoints/humanparsing/parsing_lip.onnx", 
+                        local_dir=os.path.join(Path(__file__).absolute().parents[2].absolute(), 'checkpoints/humanparsing'))
+        
         self.session = ort.InferenceSession(os.path.join(Path(__file__).absolute().parents[2].absolute(), 'checkpoints/humanparsing/parsing_atr.onnx'),
                                             sess_options=session_options, providers=['CPUExecutionProvider'])
         self.lip_session = ort.InferenceSession(os.path.join(Path(__file__).absolute().parents[2].absolute(), 'checkpoints/humanparsing/parsing_lip.onnx'),
