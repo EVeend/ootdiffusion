@@ -10,7 +10,6 @@ from utils_ootd import get_mask_location
 PROJECT_ROOT = Path(__file__).absolute().parents[1].absolute()
 sys.path.insert(0, str(PROJECT_ROOT))
 
-import time
 from preprocess.openpose.run_openpose import OpenPose
 from preprocess.humanparsing.run_parsing import Parsing
 from ootd.inference_ootd_hd import OOTDiffusionHD
@@ -36,6 +35,10 @@ garment_hd = os.path.join(example_path, 'garment/03244_00.jpg')
 model_dc = os.path.join(example_path, 'model/model_8.png')
 garment_dc = os.path.join(example_path, 'garment/048554_1.jpg')
 
+
+import spaces
+
+@spaces.GPU
 def process_hd(vton_img, garm_img, n_samples, n_steps, image_scale, seed):
     model_type = 'hd'
     category = 0 # 0:upperbody; 1:lowerbody; 2:dress
@@ -257,4 +260,4 @@ with block:
     ips_dc = [vton_img_dc, garm_img_dc, category_dc, n_samples_dc, n_steps_dc, image_scale_dc, seed_dc]
     run_button_dc.click(fn=process_dc, inputs=ips_dc, outputs=[result_gallery_dc])
 
-block.launch(server_name='0.0.0.0', server_port=7865)
+block.launch()
