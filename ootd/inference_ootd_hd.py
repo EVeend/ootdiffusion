@@ -63,6 +63,7 @@ class OOTDiffusionHD:
             safety_checker=None,
             requires_safety_checker=False,
         ).to(self.gpu_id)
+        
             # vae=vae,
             # unet_garm=unet_garm,
             # unet_vton=unet_vton,
