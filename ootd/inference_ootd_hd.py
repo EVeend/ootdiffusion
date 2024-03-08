@@ -25,9 +25,9 @@ from transformers import AutoProcessor, CLIPVisionModelWithProjection
 from transformers import CLIPTextModel, CLIPTokenizer
 
 VIT_PATH = "openai/clip-vit-large-patch14"
-VAE_PATH = "levihsu/OOTDiffusion/checkpoints/ootd"
-UNET_PATH = "levihsu/OOTDiffusion/checkpoints/ootd/ootd_hd/checkpoint-36000"
-MODEL_PATH = "levihsu/OOTDiffusion/checkpoints/ootd"
+VAE_PATH = "levihsu/ootd"
+UNET_PATH = "levihsu/ootd"
+MODEL_PATH = "levihsu/ootd"
 
 class OOTDiffusionHD:
 
@@ -42,13 +42,13 @@ class OOTDiffusionHD:
 
         unet_garm = UNetGarm2DConditionModel.from_pretrained(
             UNET_PATH,
-            subfolder="unet_garm",
+            subfolder="ootd_hd/checkpoint-36000/unet_garm",
             torch_dtype=torch.float16,
             use_safetensors=True,
         )
         unet_vton = UNetVton2DConditionModel.from_pretrained(
             UNET_PATH,
-            subfolder="unet_vton",
+            subfolder="ootd_hd/checkpoint-36000/unet_vton",
             torch_dtype=torch.float16,
             use_safetensors=True,
         )
