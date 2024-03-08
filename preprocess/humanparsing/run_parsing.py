@@ -19,12 +19,14 @@ class Parsing:
         session_options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
         session_options.add_session_config_entry('gpu_id', str(gpu_id))
 
+        print('start download')
         hf_hub_download(repo_id="levihsu/OOTDiffusion", 
                         filename="checkpoints/humanparsing/parsing_atr.onnx", 
                         local_dir=os.path.join(Path(__file__).absolute().parents[2].absolute(), 'checkpoints/humanparsing'))
         hf_hub_download(repo_id="levihsu/OOTDiffusion", 
                         filename="checkpoints/humanparsing/parsing_lip.onnx", 
                         local_dir=os.path.join(Path(__file__).absolute().parents[2].absolute(), 'checkpoints/humanparsing'))
+        print('finish download')
         
         self.session = ort.InferenceSession(os.path.join(Path(__file__).absolute().parents[2].absolute(), 'checkpoints/humanparsing/parsing_atr.onnx'),
                                             sess_options=session_options, providers=['CPUExecutionProvider'])
