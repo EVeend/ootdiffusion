@@ -20,9 +20,9 @@ openpose_model_hd = OpenPose(0)
 parsing_model_hd = Parsing(0)
 ootd_model_hd = OOTDiffusionHD(0)
 
-openpose_model_dc = OpenPose(0)
-parsing_model_dc = Parsing(0)
-ootd_model_dc = OOTDiffusionDC(0)
+openpose_model_dc = OpenPose(1)
+parsing_model_dc = Parsing(1)
+ootd_model_dc = OOTDiffusionDC(1)
 
 
 category_dict = ['upperbody', 'lowerbody', 'dress']
@@ -44,6 +44,11 @@ def process_hd(vton_img, garm_img, n_samples, n_steps, image_scale, seed):
     category = 0 # 0:upperbody; 1:lowerbody; 2:dress
 
     with torch.no_grad():
+        openpose_model_hd.preprocessor.body_estimation.model.to('cuda')
+        ootd_model_hd.pipe.to('cuda')
+        ootd_model_hd.image_encoder.to('cuda')
+        ootd_model_hd.text_encoder.to('cuda')
+        
         garm_img = Image.open(garm_img).resize((768, 1024))
         vton_img = Image.open(vton_img).resize((768, 1024))
         keypoints = openpose_model_hd(vton_img.resize((384, 512)))
@@ -81,6 +86,11 @@ def process_dc(vton_img, garm_img, category, n_samples, n_steps, image_scale, se
         category =2
 
     with torch.no_grad():
+        openpose_model_dc.preprocessor.body_estimation.model.to('cuda')
+        ootd_model_dc.pipe.to('cuda')
+        ootd_model_dc.image_encoder.to('cuda')
+        ootd_model_dc.text_encoder.to('cuda')
+        
         garm_img = Image.open(garm_img).resize((768, 1024))
         vton_img = Image.open(vton_img).resize((768, 1024))
         keypoints = openpose_model_dc(vton_img.resize((384, 512)))
