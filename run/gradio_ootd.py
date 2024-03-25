@@ -20,9 +20,9 @@ openpose_model_hd = OpenPose(0)
 parsing_model_hd = Parsing(0)
 ootd_model_hd = OOTDiffusionHD(0)
 
-openpose_model_dc = OpenPose(1)
-parsing_model_dc = Parsing(1)
-ootd_model_dc = OOTDiffusionDC(1)
+openpose_model_dc = OpenPose(0)
+parsing_model_dc = Parsing(0)
+ootd_model_dc = OOTDiffusionDC(0)
 
 
 category_dict = ['upperbody', 'lowerbody', 'dress']
@@ -70,6 +70,7 @@ def process_hd(vton_img, garm_img, n_samples, n_steps, image_scale, seed):
 
     return images
 
+@spaces.GPU
 def process_dc(vton_img, garm_img, category, n_samples, n_steps, image_scale, seed):
     model_type = 'dc'
     if category == 'Upper-body':
