@@ -16,3 +16,5 @@ config==0.5.1
 einops==0.7.0
 onnxruntime==1.16.2
 basicsr
+fastapi==0.88.0
+pydantic==1.10.11
